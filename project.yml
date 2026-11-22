@@ -1,0 +1,17 @@
+name: HomeFitPersonal365
+options:
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  HomeFitPersonal365:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.homefit.personal365
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: HomeFit Personal 365
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
