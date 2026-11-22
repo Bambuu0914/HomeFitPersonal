@@ -1,0 +1,23 @@
+name: Build HomeFit IPA
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  ipa:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and package for iPhone
+        run: |
+          brew install xcodegen
+          xcodegen generate
+          xcodebuild -project HomeFitPersonal365.xcodeproj -scheme HomeFitPersonal365 -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+          mkdir Payload
+          ditto build/Build/Products/Release-iphoneos/HomeFitPersonal365.app Payload/HomeFitPersonal365.app
+          /usr/bin/zip -qry HomeFitPersonal365.ipa Payload
+          unzip -t HomeFitPersonal365.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HomeFitPersonal365-IPA
+          path: HomeFitPersonal365.ipa
+          if-no-files-found: error
